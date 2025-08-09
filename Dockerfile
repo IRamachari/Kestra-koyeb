@@ -4,7 +4,7 @@ FROM kestra/kestra:latest-no-plugins
 # Set environment variables for Koyeb free plan constraints
 ENV KESTRA_REPOSITORY_TYPE=memory
 ENV KESTRA_STORAGE_TYPE=local
-ENV KESTRA_STORAGE_LOCAL_BASE_PATH=/tmp/kestra-storage
+ENV KESTRA_STORAGE_LOCAL_BASEPATH=/tmp/kestra-storage
 ENV KESTRA_QUEUE_TYPE=memory
 ENV KESTRA_DATASOURCES_DEFAULT_URL="jdbc:h2:mem:public;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
 ENV KESTRA_DATASOURCES_DEFAULT_DRIVER_CLASS_NAME=org.h2.Driver
