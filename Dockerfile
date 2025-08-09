@@ -1,12 +1,6 @@
 # Use the official Kestra image as base
 FROM kestra/kestra:latest-no-plugins
 
-# Set working directory
-WORKDIR /app
-
-# Copy configuration files
-COPY kestra-config.yml /app/config/application.yml
-
 # Set environment variables for Koyeb free plan constraints
 ENV KESTRA_REPOSITORY_TYPE=memory
 ENV KESTRA_STORAGE_TYPE=local
