@@ -6,13 +6,6 @@ WORKDIR /app
 
 # Copy configuration files
 COPY kestra-config.yml /app/config/application.yml
-COPY entrypoint.sh /app/entrypoint.sh
-
-# Make entrypoint executable
-RUN chmod +x /app/entrypoint.sh
-
-# Create necessary directories
-RUN mkdir -p /tmp/kestra-storage /tmp/kestra-logs
 
 # Set environment variables for Koyeb free plan constraints
 ENV KESTRA_REPOSITORY_TYPE=memory
@@ -25,17 +18,17 @@ ENV KESTRA_DATASOURCES_DEFAULT_USERNAME=sa
 ENV KESTRA_DATASOURCES_DEFAULT_PASSWORD=""
 ENV KESTRA_DATASOURCES_DEFAULT_DIALECT=H2
 ENV MICRONAUT_SERVER_PORT=8080
-ENV JAVA_OPTS="-Xmx256m -Xms128m"
+ENV JAVA_OPTS="-Xmx256m -Xms128m -XX:+UseG1GC"
+
+# Create necessary directories
+RUN mkdir -p /tmp/kestra-storage /tmp/kestra-logs
 
 # Expose port
 EXPOSE 8080
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
   CMD curl -f http://localhost:8080/health || exit 1
 
-# Use custom entrypoint
-ENTRYPOINT ["/app/entrypoint.sh"]
-
-# Default command
+# Start Kestra directly
 CMD ["server", "standalone"]
