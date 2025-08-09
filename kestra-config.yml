@@ -35,14 +35,10 @@ kestra:
   variables:
     env-vars-prefix: "KESTRA_VAR_"
   
-  # Plugins configuration
+  # Plugins configuration (empty to avoid null pointer issues)
   plugins:
-    repositories:
-      central:
-        url: https://s01.oss.sonatype.org/content/repositories/snapshots/
-    defaults:
-      - group: io.kestra.plugin
-        artifact: plugin-core
+    repositories: {}
+    defaults: {}
 
 # Micronaut configuration
 micronaut:
