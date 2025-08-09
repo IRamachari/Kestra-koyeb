@@ -1,0 +1,66 @@
+# .dockerignore file for Kestra deployment
+
+# Git files
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+*.md
+docs/
+
+# Docker files (except Dockerfile)
+docker-compose*.yml
+.dockerignore
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Build artifacts
+target/
+build/
+dist/
+
+# Node modules (if any)
+node_modules/
+
+# Python files (if any)
+__pycache__/
+*.pyc
+*.pyo
+
+# Local environment files
+.env
+.env.local
+.env.*.local
+
+# Coverage reports
+coverage/
+*.coverage
+
+# Test files
+test/
+tests/
+*test*
+
+# Backup files
+*.bak
+*.backup
