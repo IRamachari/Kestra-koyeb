@@ -1,0 +1,80 @@
+# Koyeb deployment configuration for Kestra
+# This file can be used for GitOps deployment
+
+name: kestra-app
+
+services:
+  - name: kestra
+    # Build configuration
+    build:
+      type: docker
+      dockerfile: Dockerfile
+    
+    # Instance configuration (free plan)
+    instance_type: free
+    
+    # Scaling configuration
+    scaling:
+      min: 1
+      max: 1
+    
+    # Environment variables
+    env:
+      - name: KESTRA_REPOSITORY_TYPE
+        value: memory
+      - name: KESTRA_STORAGE_TYPE
+        value: local
+      - name: KESTRA_STORAGE_LOCAL_BASE_PATH
+        value: /tmp/kestra-storage
+      - name: KESTRA_QUEUE_TYPE
+        value: memory
+      - name: KESTRA_DATASOURCES_DEFAULT_URL
+        value: "jdbc:h2:mem:public;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
+      - name: KESTRA_DATASOURCES_DEFAULT_DRIVER_CLASS_NAME
+        value: org.h2.Driver
+      - name: KESTRA_DATASOURCES_DEFAULT_USERNAME
+        value: sa
+      - name: KESTRA_DATASOURCES_DEFAULT_PASSWORD
+        value: ""
+      - name: KESTRA_DATASOURCES_DEFAULT_DIALECT
+        value: H2
+      - name: MICRONAUT_SERVER_PORT
+        value: "8080"
+      - name: JAVA_OPTS
+        value: "-Xmx256m -Xms128m -XX:+UseG1GC"
+    
+    # Port configuration
+    ports:
+      - port: 8080
+        protocol: http
+    
+    # Health check configuration
+    health_check:
+      http:
+        port: 8080
+        path: /health
+      initial_delay_seconds: 60
+      period_seconds: 30
+      timeout_seconds: 10
+      failure_threshold: 3
+    
+    # Resource configuration (free plan limits)
+    resources:
+      memory: 512Mi
+      cpu: 0.1
+    
+    # Deployment configuration
+    deployment:
+      strategy: rolling_update
+      rolling_update:
+        max_unavailable: 0
+        max_surge: 1
+
+# Global configuration
+regions:
+  - fra  # Frankfurt region (EU)
+
+# Optional: Custom domain configuration
+# domains:
+#   - name: your-kestra-domain.com
+#     service: kestra
