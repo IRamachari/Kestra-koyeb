@@ -14,7 +14,7 @@ services:
       # Same environment variables as Koyeb deployment
       KESTRA_REPOSITORY_TYPE: memory
       KESTRA_STORAGE_TYPE: local
-      KESTRA_STORAGE_LOCAL_BASE_PATH: /tmp/kestra-storage
+      KESTRA_STORAGE_LOCAL_BASEPATH: /tmp/kestra-storage
       KESTRA_QUEUE_TYPE: memory
       KESTRA_DATASOURCES_DEFAULT_URL: "jdbc:h2:mem:public;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
       KESTRA_DATASOURCES_DEFAULT_DRIVER_CLASS_NAME: org.h2.Driver
