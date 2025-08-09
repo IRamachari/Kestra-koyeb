@@ -1,0 +1,102 @@
+# Kestra Configuration for Koyeb Free Plan
+# Optimized for minimal resource usage
+
+kestra:
+  # Repository configuration (in-memory for free plan)
+  repository:
+    type: memory
+  
+  # Storage configuration (local temporary storage)
+  storage:
+    type: local
+    local:
+      base-path: "/tmp/kestra-storage"
+  
+  # Queue configuration (in-memory for free plan)
+  queue:
+    type: memory
+  
+  # Server configuration
+  server:
+    access-log:
+      enabled: false
+    basic-auth:
+      enabled: false
+  
+  # Metrics configuration (disabled to save resources)
+  metrics:
+    enabled: false
+  
+  # Security configuration
+  security:
+    enabled: false
+  
+  # Variables configuration
+  variables:
+    env-vars-prefix: "KESTRA_VAR_"
+  
+  # Plugins configuration
+  plugins:
+    repositories:
+      central:
+        url: https://s01.oss.sonatype.org/content/repositories/snapshots/
+    defaults:
+      - group: io.kestra.plugin
+        artifact: plugin-core
+
+# Micronaut configuration
+micronaut:
+  application:
+    name: kestra
+  
+  server:
+    port: 8080
+    host: 0.0.0.0
+    max-request-size: 10MB
+    multipart:
+      max-file-size: 10MB
+      disk: true
+      location: "/tmp"
+  
+  # HTTP client configuration
+  http:
+    client:
+      read-timeout: 60s
+      connect-timeout: 10s
+  
+  # Executors configuration (optimized for low memory)
+  executors:
+    io:
+      core-pool-size: 2
+      maximum-pool-size: 4
+    consumer:
+      core-pool-size: 1
+      maximum-pool-size: 2
+
+# Database configuration (H2 in-memory)
+datasources:
+  default:
+    url: "jdbc:h2:mem:public;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE"
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+    dialect: H2
+    maximum-pool-size: 2
+    minimum-idle: 1
+
+# Flyway configuration
+flyway:
+  datasources:
+    default:
+      locations:
+        - "classpath:migrations/h2"
+
+# Logging configuration (minimal for free plan)
+logger:
+  levels:
+    io.kestra: INFO
+    org.apache.kafka: WARN
+    org.elasticsearch: WARN
+    com.github.benmanes.caffeine: WARN
+    org.h2: WARN
+    com.zaxxer.hikari: WARN
