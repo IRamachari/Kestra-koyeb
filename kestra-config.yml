@@ -10,7 +10,7 @@ kestra:
   storage:
     type: local
     local:
-      base-path: "/tmp/kestra-storage"
+      basePath: "/tmp/kestra-storage"
   
   # Queue configuration (in-memory for free plan)
   queue:
