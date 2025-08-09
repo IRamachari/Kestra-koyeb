@@ -24,7 +24,7 @@ services:
         value: memory
       - name: KESTRA_STORAGE_TYPE
         value: local
-      - name: KESTRA_STORAGE_LOCAL_BASE_PATH
+      - name: KESTRA_STORAGE_LOCAL_BASEPATH
         value: /tmp/kestra-storage
       - name: KESTRA_QUEUE_TYPE
         value: memory
